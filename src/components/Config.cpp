@@ -81,11 +81,11 @@ bool Config::init(libretro::LoggerComponent* logger)
   mkdir(_systemFolder.c_str());
   mkdir(_screenshotsFolder.c_str());
 
-  _logger->info(TAG "Root folder:        %s", _rootFolder.c_str());
-  _logger->info(TAG "Assets folder:      %s", _assetsFolder.c_str());
-  _logger->info(TAG "Save folder:        %s", _saveFolder.c_str());
-  _logger->info(TAG "System folder:      %s", _systemFolder.c_str());
-  _logger->info(TAG "Screenshots folder: %s", _screenshotsFolder.c_str());
+  _logger->info(TAG "Pasta raiz:           %s", _rootFolder.c_str());
+  _logger->info(TAG "Pasta de ativos:      %s", _assetsFolder.c_str());
+  _logger->info(TAG "Pasta de salvamento:  %s", _saveFolder.c_str());
+  _logger->info(TAG "Pasta de sistema:     %s", _systemFolder.c_str());
+  _logger->info(TAG "Pasta de capturas:    %s", _screenshotsFolder.c_str());
 
   // TODO This should be done in main.cpp as soon as possible
   SetCurrentDirectory(_rootFolder.c_str());
@@ -462,14 +462,14 @@ bool Config::validateSettingsForHardcore(const char* library_name, int console_i
 
           if (prompt)
           {
-            std::string setting = "set " + var._name + " to " + value;
+            std::string setting = "definido " + var._name + " como " + value;
             if (!RA_WarnDisableHardcore(setting.c_str()))
               return false;
           }
           else
           {
-            std::string error = var._name + " cannot be set to " + value + " in hardcore mode.";
-            MessageBox(g_mainWindow, error.c_str(), "Error", MB_OK);
+            std::string error = var._name + " não pode ser definido como " + value + " no modo hardcore.";
+            MessageBox(g_mainWindow, error.c_str(), "Erro", MB_OK);
             return false;
           }
         }
@@ -488,13 +488,13 @@ bool Config::validateSettingsForHardcore(const char* library_name, int console_i
         {
           if (prompt)
           {
-            std::string setting = "set " + var.first + " to " + var.second;
+            std::string setting = "definido " + var.first + " como " + var.second;
             if (!RA_WarnDisableHardcore(setting.c_str()))
               return false;
           }
           else
           {
-            std::string error = var.first + " cannot be set to " + var.second + " in hardcore mode.";
+            std::string error = var.first + " não pode ser definido como " + var.second + " no modo hardcore.";
             MessageBox(g_mainWindow, error.c_str(), "Error", MB_OK);
             return false;
           }
@@ -509,7 +509,7 @@ bool Config::validateSettingsForHardcore(const char* library_name, int console_i
     if (hadDisallowedSetting && RA_HardcoreModeIsActive())
     {
       // no current disallowed setting, but one was previously set, prevent switch to hardcore
-      MessageBox(g_mainWindow, "You must reload the game to enable hardcore mode due to a core configuration change", "Error", MB_OK);
+      MessageBox(g_mainWindow, "Você deve recarregar o jogo para ativar o modo hardcore devido a uma alteração na configuração do núcleo", "Erro", MB_OK);
       return false;
     }
   }
@@ -520,14 +520,14 @@ bool Config::validateSettingsForHardcore(const char* library_name, int console_i
     char message[256];
     if (prompt)
     {
-      snprintf(message, sizeof(message), "earn achievements for %s using %s", rc_console_name(console_id), library_name);
+      snprintf(message, sizeof(message), "ganhe conquistas para %s usando %s", rc_console_name(console_id), library_name);
       if (!RA_WarnDisableHardcore(message))
         return false;
     }
     else
     {
-      snprintf(message, sizeof(message), "You cannot earn hardcore achievements for %s using %s", rc_console_name(console_id), library_name);
-      MessageBox(g_mainWindow, message, "Error", MB_OK);
+      snprintf(message, sizeof(message), "Você não pode conquistar realizações no modo hardcore para %s usando %s", rc_console_name(console_id), library_name);
+      MessageBox(g_mainWindow, message, "Erro", MB_OK);
       return false;
     }
   }
@@ -732,7 +732,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
   const WORD VALUE_WIDTH = 100;
   const WORD LINE_HEIGHT = 15;
 
-  std::string title = coreName + " Settings";
+  std::string title = coreName + " Configurações";
 
   ConfigDialog db;
   db.init(title.c_str());
@@ -749,7 +749,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
   {
     auto& controllerVariable = controllerVariables[i - 1];
     controllerVariable._key = "__controller" + std::to_string(i);
-    controllerVariable._name = "Controller " + std::to_string(i);
+    controllerVariable._name = "Controle " + std::to_string(i);
     controllerVariable._category = nullptr;
 
     controllerVariable._options.clear();
@@ -763,7 +763,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
 
   if (_variables.empty() && db.variables.empty())
   {
-    db.addLabel("No settings", 0, 0, HEADER_WIDTH + VALUE_WIDTH, LINE_HEIGHT);
+    db.addLabel("Sem configurações", 0, 0, HEADER_WIDTH + VALUE_WIDTH, LINE_HEIGHT);
     y = LINE_HEIGHT;
   }
   else
@@ -814,7 +814,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
 
     for (unsigned i = 0; i < db.maxCount; ++i)
     {
-      db.addLabel("Label", 50000 + id, x, y + 2, HEADER_WIDTH - 5, 8);
+      db.addLabel("Rótulo", 50000 + id, x, y + 2, HEADER_WIDTH - 5, 8);
       db.addCombobox(51000 + id, x + HEADER_WIDTH + 5, y, VALUE_WIDTH, LINE_HEIGHT, 100,
         s_getOption, (void*)&db, &db.selections[i]);
 
@@ -839,7 +839,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
   x += HEADER_WIDTH + VALUE_WIDTH + 15;
 
   db.addButton("OK", IDOK, x - 60 - 55, y + 4, 50, 14, true);
-  db.addButton("Cancel", IDCANCEL, x - 60, y + 4, 50, 14, false);
+  db.addButton("Cancelar", IDCANCEL, x - 60, y + 4, 50, 14, false);
 
   _updated = db.show();
 
@@ -859,7 +859,7 @@ void Config::showDialog(const std::string& coreName, Input& input)
             if (db.selections[i] < (int)var._labels.size())
               value = var._labels[db.selections[i]].c_str();
 
-            std::string setting = "set " + var._name + " to " + value;
+            std::string setting = "definido " + var._name + " como " + value;
             if (!RA_WarnDisableHardcore(setting.c_str()))
               return;
 
@@ -913,21 +913,21 @@ void Config::showEmulatorSettingsDialog()
   const WORD LINE = 15;
 
   Dialog db;
-  db.init("Emulator Settings");
+  db.init("Configurações do emulador");
 
   WORD y = 0;
 
   int fastForwardRatio = _fastForwardRatio - 2;
-  db.addLabel("Fast Forward Ratio", 51003, 0, y, 50, 8);
+  db.addLabel("Taxa de avanço rápido", 51003, 0, y, 50, 8);
   db.addCombobox(51001, 55, y - 2, WIDTH - 55, 12, 100, s_getFastForwardRatioOptions, NULL, &fastForwardRatio);
   y += LINE;
 
   bool playAudio = _audioWhileFastForwarding;
-  db.addCheckbox("Play Audio while Fast Forwarding", 51002, 0, y, WIDTH - 10, 8, &playAudio);
+  db.addCheckbox("Reproduzir áudio durante o avanço rápido", 51002, 0, y, WIDTH - 10, 8, &playAudio);
   y += LINE;
 
   db.addButton("OK", IDOK, WIDTH - 55 - 50, y, 50, 14, true);
-  db.addButton("Cancel", IDCANCEL, WIDTH - 50, y, 50, 14, false);
+  db.addButton("Cancelar", IDCANCEL, WIDTH - 50, y, 50, 14, false);
 
   if (db.show())
   {

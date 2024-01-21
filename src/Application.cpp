@@ -305,7 +305,7 @@ bool Application::init(const char* title, int width, int height)
 
     if (!loadCores(&_config, &_logger))
     {
-      MessageBox(g_mainWindow, "Could not open Cores\\cores.json.", "Initialization failed", MB_OK);
+      MessageBox(g_mainWindow, "Não foi possível abrir o Núcleos\\cores.json.", "Falha na inicialização", MB_OK);
       goto error;
     }
 
@@ -435,9 +435,9 @@ void Application::pauseForBadPerformance()
   {
     _fsm.pauseGame();
 
-    MessageBox(g_mainWindow, "Game has been paused.\n\n"
-      "Your system doesn't appear to be able to run this core at the desired speed. Consider changing some of the settings for the core.",
-      "Performance Problem Detected", MB_OK);
+    MessageBox(g_mainWindow, "O jogo foi pausado.\n\n"
+      "Seu sistema não parece ser capaz de executar esse núcleo na velocidade desejada. Considere a possibilidade de alterar algumas das configurações do núcleo.",
+      "Problema de desempenho detectado", MB_OK);
   }
 }
 
@@ -736,9 +736,9 @@ bool Application::loadCore(const std::string& coreName)
   // open the core and fetch all the hooks
   if (!_core.loadCore(path.c_str()))
   {
-    std::string message = "Could not load ";
+    std::string message = "Não foi possível carregar ";
     message += coreName;
-    MessageBox(g_mainWindow, message.c_str(), "Failed", MB_OK);
+    MessageBox(g_mainWindow, message.c_str(), "Falhou", MB_OK);
     return false;
   }
 
@@ -746,7 +746,7 @@ bool Application::loadCore(const std::string& coreName)
   const std::string* deprecationMessage = getCoreDeprecationMessage(coreName);
   if (deprecationMessage)
   {
-    MessageBox(g_mainWindow, deprecationMessage->c_str(), "Warning", MB_OK | MB_ICONWARNING);
+    MessageBox(g_mainWindow, deprecationMessage->c_str(), "Aviso", MB_OK | MB_ICONWARNING);
   }
 
   // read the settings for the core
@@ -817,7 +817,7 @@ bool Application::loadCore(const std::string& coreName)
   // tell the core to startup (must be done after reading configs)
   if (!_core.initCore())
   {
-    std::string message = "Could not initialize ";
+    std::string message = "Não foi possível inicializar ";
     message += coreName;
     MessageBox(g_mainWindow, message.c_str(), "Failed", MB_OK);
     return false;
@@ -861,15 +861,15 @@ bool Application::loadCore(const std::string& coreName)
   case RC_CONSOLE_SHARPX1:
   case RC_CONSOLE_VIC20:
   case RC_CONSOLE_ZX_SPECTRUM:
-    info.dwTypeData = (LPSTR)"Insert Disk";
+    info.dwTypeData = (LPSTR)"Inserir disco";
     SetMenuItemInfo(_menu, IDM_CD_OPEN_TRAY, false, &info);
-    info.dwTypeData = (LPSTR)"Floppy Drive";
+    info.dwTypeData = (LPSTR)"Unidade de disquete";
     SetMenuItemInfo(GetSubMenu(_menu, 0), CDROM_MENU_INDEX, true, &info);
     _isDriveFloppy = true;
     break;
 
   default:
-    info.dwTypeData = (LPSTR)"Close Tray";
+    info.dwTypeData = (LPSTR)"Fechar a bandeja";
     SetMenuItemInfo(_menu, IDM_CD_OPEN_TRAY, false, &info);
     info.dwTypeData = (LPSTR)"CD-ROM";
     SetMenuItemInfo(GetSubMenu(_menu, 0), CDROM_MENU_INDEX, true, &info);
@@ -901,7 +901,7 @@ bool Application::validateHardcoreEnablement()
   }
   __except (EXCEPTION_EXECUTE_HANDLER)
   {
-    MessageBox(g_mainWindow, "Could not prevent switch to hardcore. Closing game.", "Failed", MB_OK);
+    MessageBox(g_mainWindow, "Não foi possível impedir a mudança para hardcore. Fechando jogo.", "Falhou", MB_OK);
 
     // if this gets called during the load (auto-enable hardcore when achievements are present), the
     // FSM won't transition properly. set a flag so we can deal with it when we get done loading.
@@ -1009,7 +1009,7 @@ bool Application::loadGame(const std::string& path)
   /* make sure none of the forbidden settings are set */
   if (!_config.validateSettingsForHardcore(_core.getSystemInfo()->library_name, _system, true))
   {
-    MessageBox(g_mainWindow, "Game load was canceled.", "Failed", MB_OK);
+    MessageBox(g_mainWindow, "O carregamento do jogo foi cancelado.", "Failed", MB_OK);
     return false;
   }
 
@@ -1040,11 +1040,11 @@ bool Application::loadGame(const std::string& path)
 
     if (!issupportedzip)
     {
-      _logger.debug(TAG "%s does not support zip files", info->library_name);
+      _logger.debug(TAG "%s não é compatível com arquivos zip", info->library_name);
 
       std::string error = info->library_name;
-      error += " does not support zip files";
-      MessageBox(g_mainWindow, error.c_str(), "Core Error", MB_OK);
+      error += " não é compatível com arquivos zip";
+      MessageBox(g_mainWindow, error.c_str(), "Erro do núcleo", MB_OK);
 
       return false;
     }
@@ -1052,18 +1052,18 @@ bool Application::loadGame(const std::string& path)
     /* when a core needs fullpath for a zip file, RetroArch unzips the zip file (unless blocked by the core) */
     if (!info->block_extract)
     {
-      _logger.info(TAG "%s requires uncompressed content - extracting", info->library_name);
+      _logger.info(TAG "%s requer conteúdo não compactado - extraindo", info->library_name);
 
       data = util::loadZippedFile(&_logger, path, &size, unzippedFileName);
       if (data == NULL)
       {
-        MessageBox(g_mainWindow, "Unable to open file", "Error", MB_OK);
+        MessageBox(g_mainWindow, "Não é possível abrir o arquivo", "Erro", MB_OK);
         return false;
       }
 
       if (unzippedFileName.empty())
       {
-        MessageBox(g_mainWindow, "Could not determine which file to extract from zip", "Error", MB_OK);
+        MessageBox(g_mainWindow, "Não foi possível determinar qual arquivo extrair do zip", "Erro", MB_OK);
         return false;
       }
 
@@ -1152,16 +1152,16 @@ bool Application::loadGame(const std::string& path)
   if (!loaded)
   {
     // The most common cause of failure is missing system files.
-    _logger.debug(TAG "Game load failure (%s)", info ? info->library_name : "Unknown");
+    _logger.debug(TAG "Falha no carregamento do jogo (%s)", info ? info->library_name : "Desconhecido");
 
     if (!errorBuffer.empty())
     {
-      errorBuffer = "Game load error.\n\n" + errorBuffer;
-      MessageBox(g_mainWindow, errorBuffer.c_str(), "Core Error", MB_OK);
+      errorBuffer = "Erro ao carregar o jogo.\n\n" + errorBuffer;
+      MessageBox(g_mainWindow, errorBuffer.c_str(), "Erro do núcleo", MB_OK);
     }
     else
     {
-      MessageBox(g_mainWindow, "Game load error.\n\nPlease ensure that required system files are present and restart.", "Core Error", MB_OK);
+      MessageBox(g_mainWindow, "Erro ao carregar o jogo.\n\nCertifique-se de que os arquivos de sistema necessários estejam presentes e reinicie.", "Erro do núcleo", MB_OK);
     }
 
     if (data)
@@ -1182,7 +1182,7 @@ bool Application::loadGame(const std::string& path)
 
     _core.unloadGame();
 
-    MessageBox(g_mainWindow, "Game load was canceled.", "Failed", MB_OK);
+    MessageBox(g_mainWindow, "O carregamento do jogo foi cancelado.", "Falhou", MB_OK);
     return false;
   }
 
@@ -1765,19 +1765,19 @@ std::string Application::getScreenshotPath()
 void Application::saveState(const std::string& path)
 {
   if (!_states.saveState(path))
-    MessageBox(g_mainWindow, "Failed to create save state.", "Failed to create save state", MB_OK);
+    MessageBox(g_mainWindow, "Falha ao criar o estado de salvamento.", "Falha ao criar o estado de salvamento", MB_OK);
 }
 
 void Application::saveState(unsigned ndx)
 {
   if (!_states.saveState(ndx))
   {
-    std::string message = "Failed to create save state.";
+    std::string message = "Falha ao criar o estado de salvamento.";
     std::string filename = _states.getStatePath(ndx);
     if (filename.length() > MAX_PATH)
-      message += "\n\nGenerated path is too long:\n" + filename;
+      message += "\n\nO caminho gerado é muito longo:\n" + filename;
 
-    MessageBox(g_mainWindow, message.c_str(), "Failed to create save state", MB_OK);
+    MessageBox(g_mainWindow, message.c_str(), "Falha ao criar o estado de salvamento", MB_OK);
     return;
   }
 
@@ -1787,7 +1787,7 @@ void Application::saveState(unsigned ndx)
 
 void Application::saveState()
 {
-  std::string extensions = "State Files (*.state)";
+  std::string extensions = "Arquivos de estado (*.state)";
   extensions.append("\0", 1);
   extensions.append("*.state");
   extensions.append("\0", 2);
@@ -1822,11 +1822,11 @@ void Application::loadState(unsigned ndx)
 
 void Application::loadState()
 {
-  std::string extensions = "State Files (*.state*)";
+  std::string extensions = "Arquivos de estado (*.state*)";
   extensions.append("\0", 1);
   extensions.append("*.state*");
   extensions.append("\0", 1);
-  extensions.append("All Files (*.*)");
+  extensions.append("Todos os arquivos (*.*)");
   extensions.append("\0", 1);
   extensions.append("*.*");
   extensions.append("\0", 2);
@@ -1842,7 +1842,7 @@ void Application::screenshot()
 {
   if (!isGameActive())
   {
-    _logger.warn(TAG "No active game, screenshot not taken");
+    _logger.warn(TAG "Nenhum jogo ativo, captura de tela não tirada");
     return;
   }
 
@@ -2385,7 +2385,7 @@ void Application::handle(const SDL_SysWMEvent* syswm)
           const time_t oneYear = (time_t)365 * 24 * 60 * 60;
           if (coreAge > oneYear)
           {
-            std::string message = "The " + getEmulatorName(coreName, _system) + " core hasn't been updated in over a year.\r\n\r\nWould you like to do so now?";
+            std::string message = "O " + getEmulatorName(coreName, _system) + " núcleo não é atualizado há mais de um ano.\r\n\r\nVocê gostaria de fazer isso agora?";
             if (MessageBox(g_mainWindow, message.c_str(), "RALibRetro", MB_YESNO) == IDYES)
             {
               if (showCoresDialog(&_config, &_logger, _coreName, _system))
@@ -2693,25 +2693,25 @@ bool Application::handleArgs(int argc, char* argv[])
     return true;
   }
 
-  _logger.info("[APP] cli argument core: %s", core.c_str());
-  _logger.info("[APP] cli argument system: %i", system);
-  _logger.info("[APP] cli argument game: %s", game.c_str());
+  _logger.info("[APP] núcleo do argumento cli: %s", core.c_str());
+  _logger.info("[APP] sistema de argumentos cli: %i", system);
+  _logger.info("[APP] jogo de argumentação cli: %s", game.c_str());
 
   if (!util::exists(game)) {
-    std::string message = "File not found provided in 'game' command line argument '" + game + "'";
+    std::string message = "Arquivo não encontrado fornecido no argumento de linha de comando 'game' '" + game + "'";
     
     _logger.error(message.c_str());
 
-    MessageBox(g_mainWindow, message.c_str(), "Failed to load game", MB_OK);
+    MessageBox(g_mainWindow, message.c_str(), "Falha ao carregar o jogo", MB_OK);
     return false;
   }
 
   if (!doesCoreSupportSystem(core, system)) {
-    std::string message = core + " core does not support system " + std::to_string(system);
+    std::string message = core + " o núcleo não é compatível com o sistema " + std::to_string(system);
     
     _logger.error(message.c_str());
 
-    MessageBox(g_mainWindow, message.c_str(), "Failed to load game", MB_OK);
+    MessageBox(g_mainWindow, message.c_str(), "Falha ao carregar o jogo", MB_OK);
     return false;
   }
 

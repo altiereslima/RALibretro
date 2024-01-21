@@ -1394,7 +1394,7 @@ protected:
           size_t nIndex = sMessage.find_first_of('\n');
           if (nIndex != std::string::npos)
             sMessage.resize(nIndex);
-          sMessage.append("\nFocus this window to enter new input");
+          sMessage.append("\nFocalize essa janela para inserir uma nova entrada");
           SetDlgItemText(hwnd, ID_LABEL, sMessage.c_str());
         }
         break;
@@ -1609,9 +1609,9 @@ protected:
     GetDlgItemText(hwnd, 10000 + button, buffer, sizeof(buffer));
     db.addLabel(buffer, ChangeInputDialog::ID_LABEL, 0, 0, 200, 18);
 
-    db.addButton("Clear", ChangeInputDialog::IDC_CLEAR, 0, 20, 50, 14, false);
+    db.addButton("Limpar", ChangeInputDialog::IDC_CLEAR, 0, 20, 50, 14, false);
     db.addButton("OK", IDOK, 80, 20, 50, 14, true);
-    db.addButton("Cancel", IDCANCEL, 140, 20, 50, 14, false);
+    db.addButton("Cancelar", IDCANCEL, 140, 20, 50, 14, false);
 
     // the joystick is normally ignored if the SDL window doesn't have focus
     // temporarily disable that behavior
@@ -1629,7 +1629,7 @@ protected:
 
   void exportJson(HWND hwnd)
   {
-    std::string extensions = "JSON Files (*.json)";
+    std::string extensions = "Arquivos JSON (*.json)";
     extensions.append("\0", 1);
     extensions.append("*.json");
     extensions.append("\0", 2);
@@ -1664,7 +1664,7 @@ protected:
 
   void importJson(HWND hwnd)
   {
-    std::string extensions = "JSON Files (*.json)";
+    std::string extensions = "Arquivos JSON (*.json)";
     extensions.append("\0", 1);
     extensions.append("*.json");
     extensions.append("\0", 2);
@@ -1714,7 +1714,7 @@ protected:
 void KeyBinds::showControllerDialog(Input& input, int port)
 {
   char label[32];
-  snprintf(label, sizeof(label), "Controller %u", port + 1);
+  snprintf(label, sizeof(label), "Controle %u", port + 1);
 
   InputDialog db;
   db.init(label);
@@ -1739,7 +1739,7 @@ void KeyBinds::showControllerDialog(Input& input, int port)
 void KeyBinds::showHotKeyDialog(Input& input)
 {
   InputDialog db;
-  db.init("Hot Keys");
+  db.init("Teclas de atalho");
   db._input = &input;
   db._bindingMap = &_bindingMap;
   db._logger = _logger;

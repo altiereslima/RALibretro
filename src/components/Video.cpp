@@ -495,20 +495,20 @@ void Video::showDialog()
   WORD y = 0;
 
   bool preserveAspect = _preserveAspect;
-  db.addCheckbox("Preserve aspect ratio", 51001, 0, y, WIDTH - 10, 8, &preserveAspect);
+  db.addCheckbox("Preservar a proporção da tela", 51001, 0, y, WIDTH - 10, 8, &preserveAspect);
   y += LINE;
 
   bool linearFilter = _linearFilter;
-  db.addCheckbox("Linear filtering", 51002, 0, y, WIDTH - 10, 8, &linearFilter);
+  db.addCheckbox("Filtragem linear", 51002, 0, y, WIDTH - 10, 8, &linearFilter);
   y += LINE;
 
   int rotation = (int)_rotation;
-  db.addLabel("Screen Rotation", 51003, 0, y, 50, 8);
+  db.addLabel("Rotação da tela", 51003, 0, y, 50, 8);
   db.addCombobox(51004, 55, y - 2, WIDTH - 55, 12, 100, s_getRotateOptions, NULL, &rotation);
   y += LINE;
 
   db.addButton("OK", IDOK, WIDTH - 55 - 50, y, 50, 14, true);
-  db.addButton("Cancel", IDCANCEL, WIDTH - 50, y, 50, 14, false);
+  db.addButton("Cancelar", IDCANCEL, WIDTH - 50, y, 50, 14, false);
 
   if (db.show())
   {

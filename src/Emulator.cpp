@@ -358,7 +358,7 @@ const char* getSystemManufacturer(int system)
       return "SNK";
 
     default:
-      return "Other";
+      return "Outros";
   }
 }
 
@@ -421,7 +421,7 @@ protected:
       }
       else
       {
-        std::string deprecatedName = pair.first + " (Deprecated)";
+        std::string deprecatedName = pair.first + " (Obsoleto)";
         SetWindowText(hCoreName, deprecatedName.c_str());
       }
 
@@ -429,15 +429,15 @@ protected:
       {
         struct tm tm;
         gmtime_s(&tm, &pair.second->filetime);
-        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tm);
+        std::strftime(buffer, sizeof(buffer), "%d-%m-%Y", &tm);
         SetWindowText(hLocalTime, buffer);
-        SetWindowText(hUpdate, "Update");
+        SetWindowText(hUpdate, "Atualizar");
         EnableWindow(hDelete, TRUE);
       }
       else
       {
-        SetWindowText(hLocalTime, "n/a");
-        SetWindowText(hUpdate, "Download");
+        SetWindowText(hLocalTime, "n/d");
+        SetWindowText(hUpdate, "Baixar");
         EnableWindow(hDelete, FALSE);
       }
 
@@ -445,7 +445,7 @@ protected:
       {
         struct tm tm;
         gmtime_s(&tm, &pair.second->servertime);
-        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tm);
+        std::strftime(buffer, sizeof(buffer), "%d-%m-%Y", &tm);
         SetWindowText(hServerTime, buffer);
 
         if (!pair.second->filetime)
@@ -512,7 +512,7 @@ protected:
     url += coreName + ".dll.zip";
     if (!util::downloadFile(logger, url, zipPath))
     {
-      MessageBox(hwnd, "Download failed.", "Error", MB_OK);
+      MessageBox(hwnd, "Falha no download.", "Erro", MB_OK);
     }
 
     if (!util::unzipFile(logger, zipPath, coreFile, path))
@@ -520,11 +520,11 @@ protected:
       const auto unicodePath = util::utf8ToUChar(path);
       if (unicodePath.length() != path.length())
       {
-        MessageBox(hwnd, "miniz does not support unicode paths. Please manually unzip the file in the Cores subdirectory and restart RALibRetro.", "Error", MB_OK);
+        MessageBox(hwnd, "O miniz não é compatível com caminhos unicode. Descompacte manualmente o arquivo no subdiretório Cores e reinicie o RALibRetro.", "Erro", MB_OK);
       }
       else
       {
-        MessageBox(hwnd, "Unzip failed. Please manually unzip the file in the Cores subdirectory and restart RALibRetro.", "Error", MB_OK);
+        MessageBox(hwnd, "A descompactação falhou. Descompacte manualmente o arquivo no subdiretório Cores e reinicie o RALibRetro.", "Erro", MB_OK);
       }
     }
     else
@@ -569,7 +569,7 @@ protected:
           {
             if (coreNames[cmd - 51400] == *loadedCore)
             {
-              MessageBox(hwnd, "Cannot delete active core", "Error", MB_OK);
+              MessageBox(hwnd, "Não é possível excluir o núcleo ativo", "Error", MB_OK);
               return 0;
             }
 
@@ -579,12 +579,12 @@ protected:
           {
             if (coreNames[cmd - 51300] == *loadedCore)
             {
-              MessageBox(hwnd, "Cannot update active core", "Error", MB_OK);
+              MessageBox(hwnd, "Não é possível atualizar o núcleo ativo", "Erro", MB_OK);
               return 0;
             }
 
             HWND hUpdate = GetDlgItem(hwnd, cmd);
-            SetWindowText(hUpdate, "Downloading...");
+            SetWindowText(hUpdate, "Baixando...");
             EnableWindow(hwnd, FALSE);
 
             updateCore(hwnd, coreNames[cmd - 51300]);
@@ -663,7 +663,7 @@ static void getCoreSystemTimes(Config* config, Logger* logger)
 bool showCoresDialog(Config* config, Logger* logger, const std::string& loadedCore, int selectedSystem)
 {
   CoreDialog db;
-  db.init("Manage Cores");
+  db.init("Gerenciar núcleos");
   db.config = config;
   db.logger = logger;
   db.loadedCore = &loadedCore;
@@ -711,16 +711,16 @@ bool showCoresDialog(Config* config, Logger* logger, const std::string& loadedCo
   y += 20;
 
   db.addLabel("Local", 170, y, 50, 14);
-  db.addLabel("Server", 230, y, 50, 14);
+  db.addLabel("Servidor", 230, y, 50, 14);
   y += 10;
 
   for (int i = 0; i < maxSystemCoreCount; ++i)
   {
-    db.addLabel("Core Name", 51000 + i, 0, y + 3, 160, 14);
-    db.addLabel("Local Time", 51100 + i, 170, y + 3, 50, 14);
-    db.addLabel("Server Time", 51200 + i, 230, y + 3, 50, 14);
-    db.addButton("Update", 51300 + i, 290, y, 60, 14, false);
-    db.addButton("Delete", 51400 + i, 360, y, 60, 14, false);
+    db.addLabel("Nome do núcleo", 51000 + i, 0, y + 3, 160, 14);
+    db.addLabel("Hora local", 51100 + i, 170, y + 3, 50, 14);
+    db.addLabel("Hora do servidor", 51200 + i, 230, y + 3, 50, 14);
+    db.addButton("Atualizar", 51300 + i, 290, y, 60, 14, false);
+    db.addButton("Excluir", 51400 + i, 360, y, 60, 14, false);
     y += 18;
   }
 

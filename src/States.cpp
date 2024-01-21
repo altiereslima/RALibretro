@@ -174,7 +174,7 @@ static void writeBlockHeader(uint8_t* output, const char* header, size_t size)
 
 bool States::saveState(const std::string& path)
 {
-  _logger->info(TAG "Saving state to %s", path.c_str());
+  _logger->info(TAG "Salvando o estado em %s", path.c_str());
 
   util::ensureDirectoryExists(util::directory(path));
 
@@ -182,8 +182,8 @@ bool States::saveState(const std::string& path)
   const size_t coreSize = _core->serializeSize();
   if (coreSize == 0)
   {
-    _logger->warn(TAG "Core returned 0 for save state size");
-    MessageBox(g_mainWindow, "Core does not support save states", "RALibRetro", MB_OK);
+    _logger->warn(TAG "O núcleo retornou 0 para o tamanho do estado salvo");
+    MessageBox(g_mainWindow, "O Core não é compatível com estados salvos", "RALibRetro", MB_OK);
     return false;
   }
 
@@ -417,9 +417,9 @@ static void* decompressRzip(uint8_t* data, size_t* size, Logger* logger)
 
 bool States::loadState(const std::string& path)
 {
-  if (!RA_WarnDisableHardcore("load a state"))
+  if (!RA_WarnDisableHardcore("carregar um estado"))
   {
-    _logger->warn(TAG "Hardcore mode is active, can't load state");
+    _logger->warn(TAG "O modo hardcore está ativo, não é possível carregar o estado");
     return false;
   }
 
@@ -436,8 +436,8 @@ bool States::loadState(const std::string& path)
     void* decompressed = decompressRzip((uint8_t*)data, &size, _logger);
     if (decompressed == NULL)
     {
-      _logger->error(TAG "Failed to decompress rzip save state");
-      MessageBox(g_mainWindow, "Failed to decompress rzip save state", "RALibRetro", MB_OK);
+      _logger->error(TAG "Falha ao descompactar o estado de salvamento do rzip");
+      MessageBox(g_mainWindow, "Falha ao descompactar o estado de salvamento do rzip", "RALibRetro", MB_OK);
     }
 
     free(data);
@@ -482,16 +482,16 @@ bool States::loadState(const std::string& path)
   free(data);
   if (!ret)
   {
-    _logger->error(TAG "Error loading savestate");
+    _logger->error(TAG " ao carregar estado de salvamento");
 
     if (!errorBuffer.empty())
     {
-      errorBuffer = "Failed to load state.\n\n" + errorBuffer;
-      MessageBox(g_mainWindow, errorBuffer.c_str(), "Core Error", MB_OK);
+      errorBuffer = "Falha ao carregar o estado.\n\n" + errorBuffer;
+      MessageBox(g_mainWindow, errorBuffer.c_str(), "Erro do núcleo", MB_OK);
     }
     else
     {
-      MessageBox(g_mainWindow, "Failed to load state.", "Core Error", MB_OK);
+      MessageBox(g_mainWindow, "Falha ao carregar o estado.", "Erro do núcleo", MB_OK);
     }
 
     return false;
@@ -509,7 +509,7 @@ void States::restoreFrameBuffer(const void* pixels, unsigned image_width, unsign
   if (image_width != width)
   {
     /* if the widths aren't the same, the stride differs and we can't just load the pixels */
-    _logger->warn(TAG "Ignoring savestate screenshot. width differs: %u != %u", image_width, width);
+    _logger->warn(TAG "Ignorando a captura de tela do estado de salvamento. A largura difere: %u != %u", image_width, width);
   }
   else
   {
@@ -604,15 +604,15 @@ void States::loadSRAM(libretro::Core* core)
       void* memory = core->getMemoryData(RETRO_MEMORY_SAVE_RAM);
       if (fileSize == sramSize)
       {
-        _logger->info(TAG "Loaded %lu bytes of Save RAM from disk", fileSize);
+        _logger->info(TAG "Carregamento de %lu bytes de salvamento de RAM do disco", fileSize);
       }
       else if (fileSize <= sramSize)
       {
-        _logger->warn(TAG "Loaded %lu bytes of Save RAM from disk, wanted %lu", fileSize, sramSize);
+        _logger->warn(TAG "Carregados %lu bytes de salvamento de RAM do disco, desejados %lu", fileSize, sramSize);
       }
       else
       {
-        _logger->warn(TAG "Loaded %lu bytes of Save RAM from disk, truncated from %lu", sramSize, fileSize);
+        _logger->warn(TAG "Carregados %lu bytes de salvamento de RAM do disco, truncados de %lu", sramSize, fileSize);
         fileSize = sramSize;
       }
 
@@ -700,7 +700,7 @@ void States::migrateFiles()
       oldPath.erase(0, rootFolderLength);
       newPath.erase(0, rootFolderLength);
 
-      std::string message = "Found SRAM data in " + oldPath + ".\n\nMove to " + newPath + "?";
+      std::string message = "Dados da SRAM encontrados em " + oldPath + ".\n\nMover para " + newPath + "?";
       if (MessageBox(g_mainWindow, message.c_str(), "RALibRetro", MB_YESNO) == IDYES)
       {
         util::ensureDirectoryExists(util::directory(sramPath));
@@ -748,7 +748,7 @@ void States::migrateFiles()
       oldPath.erase(0, rootFolderLength);
       newPath.erase(0, rootFolderLength);
 
-      std::string message = "Found save state data in " + oldPath + ".\n\nMove to " + newPath + "?";
+      std::string message = "Dados de estado salvo encontrados em " + oldPath + ".\n\nMover para " + newPath + "?";
       if (MessageBox(g_mainWindow, message.c_str(), "RALibRetro", MB_YESNO) == IDYES)
       {
         util::ensureDirectoryExists(util::directory(getStatePath(1, _statePath, true)));
@@ -888,9 +888,9 @@ public:
       {
         std::string& option = _pathOptions[i];
         if (i & States::Path::State)
-          option = "States";
+          option = "Estados";
         else
-          option = "Saves";
+          option = "Salvamentos";
 
         if (i & States::Path::System)
           option += "\\[System]";
@@ -900,16 +900,16 @@ public:
           option += "\\[Game]";
       }
 
-      _intervalOptions[0] = "None";
+      _intervalOptions[0] = "Nenhum";
       for (unsigned i = 1; i < sizeof(_saveIntervals) / sizeof(_saveIntervals[0]); ++i)
       {
         int seconds = _saveIntervals[i];
         if (seconds == 60)
           _intervalOptions[i] = "1 minute";
         else if ((seconds % 60) == 0)
-          _intervalOptions[i] = std::to_string(seconds / 60) + " minutes";
+          _intervalOptions[i] = std::to_string(seconds / 60) + " minutos";
         else
-          _intervalOptions[i] = std::to_string(seconds) + " seconds";
+          _intervalOptions[i] = std::to_string(seconds) + " segundos";
       }
     }
   }
@@ -981,7 +981,7 @@ void States::showDialog()
 {
   if (!_gameFileName.empty())
   {
-    MessageBox(g_mainWindow, "Saving settings cannot be changed with a game loaded.", "RALibRetro", MB_OK);
+    MessageBox(g_mainWindow, "As configurações de salvamento não podem ser alteradas com um jogo carregado.", "RALibRetro", MB_OK);
     return;
   }
 
@@ -989,7 +989,7 @@ void States::showDialog()
   const WORD LINE = 15;
 
   Dialog db;
-  db.init("Saving Settings");
+  db.init("Salvando configurações");
 
   WORD y = 0;
 
@@ -1002,7 +1002,7 @@ void States::showDialog()
       break;
     }
   }
-  db.addLabel("SRAM Save Interval", 51001, 0, y, 60, 8);
+  db.addLabel("Intervalo de salvamento da SRAM", 51001, 0, y, 60, 8);
   db.addCombobox(51002, 65, y - 2, WIDTH - 65, 12, 80, s_getSaveIntervalOptions, NULL, &saveInterval);
   y += LINE;
 
@@ -1015,7 +1015,7 @@ void States::showDialog()
       break;
     }
   }
-  db.addLabel("SRAM Path", 51003, 0, y, 60, 8);
+  db.addLabel("Caminho da SRAM", 51003, 0, y, 60, 8);
   db.addCombobox(51004, 65, y - 2, WIDTH - 65, 12, 140, s_getSramPathOptions, NULL, &sramPath);
   y += LINE;
 
@@ -1028,12 +1028,12 @@ void States::showDialog()
       break;
     }
   }
-  db.addLabel("Save State Path", 51005, 0, y, 60, 8);
+  db.addLabel("Salvar caminho do estado", 51005, 0, y, 60, 8);
   db.addCombobox(51006, 65, y - 2, WIDTH - 65, 12, 140, s_getStatePathOptions, NULL, &statePath);
   y += LINE;
 
   db.addButton("OK", IDOK, WIDTH - 55 - 50, y, 50, 14, true);
-  db.addButton("Cancel", IDCANCEL, WIDTH - 50, y, 50, 14, false);
+  db.addButton("Cancelar", IDCANCEL, WIDTH - 50, y, 50, 14, false);
 
   if (db.show())
   {

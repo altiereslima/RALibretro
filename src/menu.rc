@@ -35,39 +35,39 @@ along with RALibretro.  If not, see <http://www.gnu.org/licenses/>.
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 main MENU
 {
-    POPUP "File"
+    POPUP "Arquivo"
     {
-        POPUP "Select Core"
+        POPUP "Selecionar núcleo"
         {
-            MENUITEM "No Systems Found", IDM_MANAGE_CORES
+            MENUITEM "Nenhum sistema encontrado", IDM_MANAGE_CORES
         }
         MENUITEM SEPARATOR
-        MENUITEM "Load Game...", IDM_LOAD_GAME
-        POPUP "Load Recent"
+        MENUITEM "Carregar jogo...", IDM_LOAD_GAME
+        POPUP "Carregar recente"
         {
-            MENUITEM "Empty", IDM_LOAD_RECENT_1
-            MENUITEM "Empty", IDM_LOAD_RECENT_2
-            MENUITEM "Empty", IDM_LOAD_RECENT_3
-            MENUITEM "Empty", IDM_LOAD_RECENT_4
-            MENUITEM "Empty", IDM_LOAD_RECENT_5
-            MENUITEM "Empty", IDM_LOAD_RECENT_6
-            MENUITEM "Empty", IDM_LOAD_RECENT_7
-            MENUITEM "Empty", IDM_LOAD_RECENT_8
-            MENUITEM "Empty", IDM_LOAD_RECENT_9
-            MENUITEM "Empty", IDM_LOAD_RECENT_10
+            MENUITEM "Vazio", IDM_LOAD_RECENT_1
+            MENUITEM "Vazio", IDM_LOAD_RECENT_2
+            MENUITEM "Vazio", IDM_LOAD_RECENT_3
+            MENUITEM "Vazio", IDM_LOAD_RECENT_4
+            MENUITEM "Vazio", IDM_LOAD_RECENT_5
+            MENUITEM "Vazio", IDM_LOAD_RECENT_6
+            MENUITEM "Vazio", IDM_LOAD_RECENT_7
+            MENUITEM "Vazio", IDM_LOAD_RECENT_8
+            MENUITEM "Vazio", IDM_LOAD_RECENT_9
+            MENUITEM "Vazio", IDM_LOAD_RECENT_10
         }
         MENUITEM SEPARATOR
-        MENUITEM "Pause Game", IDM_PAUSE_GAME
-        MENUITEM "Resume Game", IDM_RESUME_GAME
+        MENUITEM "Pausar jogo", IDM_PAUSE_GAME
+        MENUITEM "Continuar jogo", IDM_RESUME_GAME
         MENUITEM "Turbo", IDM_TURBO_GAME
-        MENUITEM "Reset Game", IDM_RESET_GAME
+        MENUITEM "Reiniciar jogo", IDM_RESET_GAME
         MENUITEM SEPARATOR
         POPUP "CD-ROM"
         {
             MENUITEM "Open Tray", IDM_CD_OPEN_TRAY
         }
         MENUITEM SEPARATOR
-        POPUP "Save Game State"
+        POPUP "Salvar estado do jogo"
         {
             MENUITEM "Slot #1", IDM_SAVE_STATE_1
             MENUITEM "Slot #2", IDM_SAVE_STATE_2
@@ -80,8 +80,8 @@ main MENU
             MENUITEM "Slot #9", IDM_SAVE_STATE_9
             MENUITEM "Slot #10", IDM_SAVE_STATE_10
         }
-        MENUITEM "Save Game State...", IDM_SAVE_STATE
-        POPUP "Load Game State"
+        MENUITEM "Salvar estado do jogo...", IDM_SAVE_STATE
+        POPUP "Carregar estado do jogo"
         {
             MENUITEM "Slot #1", IDM_LOAD_STATE_1
             MENUITEM "Slot #2", IDM_LOAD_STATE_2
@@ -94,35 +94,35 @@ main MENU
             MENUITEM "Slot #9", IDM_LOAD_STATE_9
             MENUITEM "Slot #10", IDM_LOAD_STATE_10
         }
-        MENUITEM "Load Game State...", IDM_LOAD_STATE
+        MENUITEM "Carregar estado do jogo...", IDM_LOAD_STATE
         MENUITEM SEPARATOR
-        MENUITEM "Exit", IDM_EXIT
+        MENUITEM "Sair", IDM_EXIT
     }
-    POPUP "Settings"
+    POPUP "Configurações"
     {
-        MENUITEM "Core Settings...", IDM_CORE_CONFIG
-        POPUP "Input"
+        MENUITEM "Configurações do núcleo...", IDM_CORE_CONFIG
+        POPUP "Entrada"
         {
-            MENUITEM "Hot Keys...", IDM_INPUT_CONFIG
-            MENUITEM "Controller 1...", IDM_INPUT_CONTROLLER_1
-            MENUITEM "Controller 2...", IDM_INPUT_CONTROLLER_2
-            MENUITEM "Background Input", IDM_INPUT_BACKGROUND_INPUT
+            MENUITEM "Teclas de atalho...", IDM_INPUT_CONFIG
+            MENUITEM "Controle 1...", IDM_INPUT_CONTROLLER_1
+            MENUITEM "Controle 2...", IDM_INPUT_CONTROLLER_2
+            MENUITEM "Entrada em segundo plano", IDM_INPUT_BACKGROUND_INPUT
         }
-        MENUITEM "Emulator...", IDM_EMULATOR_CONFIG
-        MENUITEM "Saving...", IDM_SAVING_CONFIG
-        MENUITEM "Video...", IDM_VIDEO_CONFIG
-        POPUP "Window Size"
+        MENUITEM "Emulador...", IDM_EMULATOR_CONFIG
+        MENUITEM "Salvar...", IDM_SAVING_CONFIG
+        MENUITEM "Vídeo...", IDM_VIDEO_CONFIG
+        POPUP "Tamanho da janela"
         {
-            MENUITEM "Resize to 1x", IDM_WINDOW_1X
-            MENUITEM "Resize to 2x", IDM_WINDOW_2X
-            MENUITEM "Resize to 3x", IDM_WINDOW_3X
-            MENUITEM "Resize to 4x", IDM_WINDOW_4X
-            MENUITEM "Resize to 5x", IDM_WINDOW_5X
+            MENUITEM "Redimensionar para 1x", IDM_WINDOW_1X
+            MENUITEM "Redimensionar para 2x", IDM_WINDOW_2X
+            MENUITEM "Redimensionar para 3x", IDM_WINDOW_3X
+            MENUITEM "Redimensionar para 4x", IDM_WINDOW_4X
+            MENUITEM "Redimensionar para 5x", IDM_WINDOW_5X
         }
         MENUITEM SEPARATOR
-        MENUITEM "Manage Cores...", IDM_MANAGE_CORES
+        MENUITEM "Gerenciar núcleos...", IDM_MANAGE_CORES
     }
-    MENUITEM "About", IDM_ABOUT
+    MENUITEM "Sobre", IDM_ABOUT
 }
 
 
