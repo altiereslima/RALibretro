@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build RALibretro
+      run: |
+        msbuild /p:Configuration=Release /p:Platform=x64 RALibretro.sln
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: RALibretro-Artifact
+        path: bin64 
