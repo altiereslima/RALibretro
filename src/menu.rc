@@ -64,35 +64,35 @@ main MENU
         MENUITEM SEPARATOR
         POPUP "CD-ROM"
         {
-            MENUITEM "Open Tray", IDM_CD_OPEN_TRAY
+            MENUITEM "Abrir bandeja", IDM_CD_OPEN_TRAY
         }
         MENUITEM SEPARATOR
         POPUP "Salvar estado do jogo"
         {
-            MENUITEM "Slot #1", IDM_SAVE_STATE_1
-            MENUITEM "Slot #2", IDM_SAVE_STATE_2
-            MENUITEM "Slot #3", IDM_SAVE_STATE_3
-            MENUITEM "Slot #4", IDM_SAVE_STATE_4
-            MENUITEM "Slot #5", IDM_SAVE_STATE_5
-            MENUITEM "Slot #6", IDM_SAVE_STATE_6
-            MENUITEM "Slot #7", IDM_SAVE_STATE_7
-            MENUITEM "Slot #8", IDM_SAVE_STATE_8
-            MENUITEM "Slot #9", IDM_SAVE_STATE_9
-            MENUITEM "Slot #10", IDM_SAVE_STATE_10
+            MENUITEM "Compartimento #1", IDM_SAVE_STATE_1
+            MENUITEM "Compartimento #2", IDM_SAVE_STATE_2
+            MENUITEM "Compartimento #3", IDM_SAVE_STATE_3
+            MENUITEM "Compartimento #4", IDM_SAVE_STATE_4
+            MENUITEM "Compartimento #5", IDM_SAVE_STATE_5
+            MENUITEM "Compartimento #6", IDM_SAVE_STATE_6
+            MENUITEM "Compartimento #7", IDM_SAVE_STATE_7
+            MENUITEM "Compartimento #8", IDM_SAVE_STATE_8
+            MENUITEM "Compartimento #9", IDM_SAVE_STATE_9
+            MENUITEM "Compartimento #10", IDM_SAVE_STATE_10
         }
         MENUITEM "Salvar estado do jogo...", IDM_SAVE_STATE
         POPUP "Carregar estado do jogo"
         {
-            MENUITEM "Slot #1", IDM_LOAD_STATE_1
-            MENUITEM "Slot #2", IDM_LOAD_STATE_2
-            MENUITEM "Slot #3", IDM_LOAD_STATE_3
-            MENUITEM "Slot #4", IDM_LOAD_STATE_4
-            MENUITEM "Slot #5", IDM_LOAD_STATE_5
-            MENUITEM "Slot #6", IDM_LOAD_STATE_6
-            MENUITEM "Slot #7", IDM_LOAD_STATE_7
-            MENUITEM "Slot #8", IDM_LOAD_STATE_8
-            MENUITEM "Slot #9", IDM_LOAD_STATE_9
-            MENUITEM "Slot #10", IDM_LOAD_STATE_10
+            MENUITEM "Compartimento #1", IDM_LOAD_STATE_1
+            MENUITEM "Compartimento #2", IDM_LOAD_STATE_2
+            MENUITEM "Compartimento #3", IDM_LOAD_STATE_3
+            MENUITEM "Compartimento #4", IDM_LOAD_STATE_4
+            MENUITEM "Compartimento #5", IDM_LOAD_STATE_5
+            MENUITEM "Compartimento #6", IDM_LOAD_STATE_6
+            MENUITEM "Compartimento #7", IDM_LOAD_STATE_7
+            MENUITEM "Compartimento #8", IDM_LOAD_STATE_8
+            MENUITEM "Compartimento #9", IDM_LOAD_STATE_9
+            MENUITEM "Compartimento #10", IDM_LOAD_STATE_10
         }
         MENUITEM "Carregar estado do jogo...", IDM_LOAD_STATE
         MENUITEM SEPARATOR
